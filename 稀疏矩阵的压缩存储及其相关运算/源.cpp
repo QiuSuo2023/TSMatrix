@@ -722,7 +722,7 @@ int Mult(TSMatrix M, TSMatrix N, TSMatrix* Q)
 	}//for3
 	//Q->rpos[arow] = Q->tu + 1;//QµÄÐÐºÅµÈÓÚMµÄÁÐºÅ
 	free(ctemp);
-	printf("¼ÆËã³É¹¦£¡\n");
+	printf("¡°Ïà³Ë³É¹¦£¡¡±\n");
 	return 1;
 }
 /*---Ë³Ðò±íÊä³ö---*/
@@ -788,6 +788,7 @@ void Menu()
 			scanf("%d", &continu);
 			if (continu == 1)//Èç¹ûÐèÒªµü´ú£¬ÉÏÒ»²½½á¹ûT¸³Öµ¸ø³õÊ¼¾ØÕóM
 				M = T;//ºóÃæ¾Í²»ÐèÒªÔÚÊäÈëMÁË¡¾Õâ¶ÔMµÄ¸³Öµ·ÖÖ§ÓÐÁ½¸ö£¬Ò»¸öT,Ò»¸öÓÃ»§ÊäÈë£¬Õâ¸öºóÐè¿ÉÒÔ¸Ä½ø£¡¡¿
+			else x++;//ÐÂÊäÈëµÄ¾ØÕó±àºÅ
 		}
 		//µ÷ÕûÎªÏÈÊäÈëÑ¡Ôñ
 		printf("ÇëÑ¡ÔñÄãÏëÒª½øÐÐµÄÔËËã¡¾0-5¡¿£º");
@@ -795,7 +796,7 @@ void Menu()
 		//ÔÙÊäÈë¾ØÕó
 		if (select != 0) {//ÓÃ»§Ñ¡Ôñ¡¾0¡¿ÍË³öÊ±,²»ÓÃÊäÈë¾ØÕó£¬Ö±½ÓÍË³ö
 			if (cnt == 0 || continu != 1) {//µÚÒ»´ÎÊ¹ÓÃ»ò²»ÊÇµÚÒ»´ÎÊ¹ÓÃÇÒ²»ÐèÒªµü´úÊ±£¬¾ÍÐèÒªÊäÈë³õÊ¼¾ØÕóM
-				printf("ÇëÊäÈëÒ»¸ö¾ØÕó %c £º\n", m[x]);
+				printf("\t\tÇëÊäÈëÒ»¸ö¾ØÕó %c £º\n", m[x]);
 				Create(&M);
 			}
 		}
@@ -815,9 +816,7 @@ void Menu()
 /*¼Ó·¨¹¦ÄÜ*/
 TSMatrix addMatrix(TSMatrix M) {
 	TSMatrix N,Q;
-	printf("ÇëÊäÈëÐèÒªÏà¼ÓµÄ¾ØÕó %c £º\n", m[x+1]);
-	int y = x;
-	x++;
+	printf("\t\tÇëÊäÈëÐèÒªÏà¼ÓµÄ¾ØÕó %c £º\n", m[x+1]);
 	Create(&N);
 	int flag = Add(M, N, &Q);
 	SqListPrint(M);
@@ -827,7 +826,8 @@ TSMatrix addMatrix(TSMatrix M) {
 	if (flag==0) {
 		return M;
 	}
-	printf("\n%c\t+\t%c\t=\n",m[y],m[x]);
+	x += 2;
+	printf("\n%c + %c = %c\n", m[x - 2], m[x - 1], m[x]);
 	SqListPrint(Q);
 	MatrixPrint(Q);
 	cnt++;
@@ -836,9 +836,7 @@ TSMatrix addMatrix(TSMatrix M) {
 /*¼õ·¨¹¦ÄÜ*/
 TSMatrix subMatrix(TSMatrix M) {
 	TSMatrix N, Q;
-	printf("ÇëÊäÈëÐèÒªÏà¼õµÄ¾ØÕó %c £º\n", m[x+1]);
-	int y = x;
-	x++;
+	printf("\t\tÇëÊäÈëÐèÒªÏà¼õµÄ¾ØÕó %c £º\n", m[x+1]);
 	Create(&N);
 	int flag = Subt(M, N, &Q);
 	SqListPrint(M);
@@ -848,7 +846,8 @@ TSMatrix subMatrix(TSMatrix M) {
 	if (flag == 0) {
 		return M;
 	}
-	printf("\n%c\t-\t%c\t=\n", m[y], m[x]);
+	x += 2;
+	printf("\n%c - %c = %c\n", m[x - 2], m[x - 1], m[x]);
 	SqListPrint(Q);
 	MatrixPrint(Q);
 	cnt++;
@@ -857,9 +856,7 @@ TSMatrix subMatrix(TSMatrix M) {
 /*³Ë·¨¹¦ÄÜ*/
 TSMatrix multMatrix(TSMatrix M) {
 	TSMatrix N, Q;
-	printf("ÇëÊäÈëÐèÒªÏà³ËµÄ¾ØÕó %c £º\n", m[x+1]);
-	int y = x;
-	x++;
+	printf("\t\tÇëÊäÈëÐèÒªÏà³ËµÄ¾ØÕó %c £º\n", m[x+1]);
 	Create(&N);
 	int flag=Mult(M, N, &Q);
 	SqListPrint(M);
@@ -869,7 +866,8 @@ TSMatrix multMatrix(TSMatrix M) {
 	if (flag == 0) {
 		return M;
 	}
-	printf("\n%c\t*\t%c\t=\n", m[y], m[x]);
+	x += 2;
+	printf("\n%c * %c = %c\n", m[x - 2], m[x - 1], m[x]);
 	SqListPrint(Q);
 	MatrixPrint(Q);
 	cnt++;
@@ -878,12 +876,11 @@ TSMatrix multMatrix(TSMatrix M) {
 /*×ªÖÃ¹¦ÄÜ*/
 TSMatrix transMatrix(TSMatrix M) {
 	TSMatrix T;
-	int y = x;
-	x++;
 	FastTranspose(M, &T);
 	SqListPrint(M);
 	MatrixPrint(M);
-	printf("\n%c\t×ªÖÃºó=\t%c\t\n", m[y], m[x]);
+	x++;
+	printf("\n%c ×ªÖÃºó= %c\n", m[x - 1], m[x]);
 	SqListPrint(T);
 	MatrixPrint(T);
 	cnt++;
@@ -925,8 +922,6 @@ void printtip(TSMatrix* M) {
 	printf("\t\t©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼\n");
 }
 
-/*¾À´í¹¦ÄÜ*/
-
 /*
 bugÈÕÖ¾£º
 int* num;//vsÌØµã£º±ØÐëÏÈ³õÊ¼»¯£¬·ñÔòµØÖ·Î´Öª£¬µ«ÊÇdevc++È´ÔÊÐí
@@ -941,7 +936,8 @@ printf("==>¸ÃÎ»ÖÃÒÑ´æÔÚ·ÇÁãÔªËØ£¬ÊÇ·ñ¸üÐÂ¸ÃÎ»ÖÃÔªËØ¡¾y/!y¡¿£º\n");
 scanf("%c", &select);
 if (select == 'y' || select == 'Y')
 pass_Êý¾ÝÁ¿´ó£¬ÖÐÍ¾Êä´íÁËÔõÃ´°ì£¿¡¾¹¦ÄÜ£º²éÕÒºÍÅÅÐò¡¿Éæ¼°µ½Ë³Ðò±íµÄ²éÕÒºÍÖ¸¶¨ÔªËØµÄ¸üÐÂ£¬ÔÝÊ±·ÅÏÂ¡£
-ÏÈ²åÈëÅÅÐò£¨»ù±¾ÓÐÐò£©ÔÙ¶þ·Ö²éÕÒ£¬ÏÈ¶þ·Ö²éÕÒÐÐÏÂ±ê£¬ÔÙ¶þ·Ö²éÕÒÁÐÏÂ±ê
+ÏÈ²åÈëÅÅÐò£¨»ù±¾ÓÐÐò£©ÔÙ¶þ·Ö²éÕÒ£¨ÔÚË³Ðò±íÖÐµÄÎ»ÖÃ£©£¬ÏÈ¶þ·Ö²éÕÒÐÐÏÂ±ê£¬ÔÙ¶þ·Ö²éÕÒÁÐÏÂ±ê£¨´ó¿É²»±Ø£º2024/1/5£©
+Ã¿´ÎÐÐÁÐÒ»ÆðÆ¥Åä£¬´æ´¢½á¹¹ÊÇË³Ðò±í£¡
 ´óÁ¿Êý¾ÝÏÈÌáÇ°×¼±¸ºÃ£¬Ö±½Óµ¼Èë¸´ÖÆ¾ÍÐÐ
 
 ÐÞ¸ÄÈÕÖ¾£º2023/12/24
@@ -959,238 +955,18 @@ ok_»ùÓÚÓÃ»§ÊäÈë´íÎóÐèÒª¸ü¸ÄÊ±£¬¶Ô×Ô¼ºÕýÈ·ÊäÈëµÄÐÅÏ¢²»ºÃÖ±¹ÛµØ³ÊÏÖ³öÀ´µÄÎÊÌâµÄ¸Ä½
 	}//for
 5¡¢ÏÂ±êÎÊÌâ£¬Ã»ÓÐ¶ÔÓ¦£¡N.data[m]=>N.data[n]
 6¡¢¼Ó·¨µÄ½á¹û¿ÉÄÜÊÇÁãÔªËØ£¡Ñ¡ÔñÐÔ´æ´¢£¡
+
+bugÈÕÖ¾£º2024/1/5
+³Ë·¨ÊäÈë1 1 1£»1 1 1£»Ê±·¢Éú¸Õ·ÃÎÊ³åÍ»
+ÓÖÕý³£ÁË£¿£¿£¿
 */
 
 
-//void test() {
-//	TSMatrix M, N, Q;//¾Ö²¿±äÁ¿£¬ÓÃÓÚ´æ´¢ÓÃ»§ÊäÈëµÄÈýÔª×éË³Ðò±í,ÔÚCreateº¯ÊýÖÐ³õÊ¼»¯
-//	Create(&M);
-//	GetRpos(&M);
-//	for (int i = 1; i <= M.mu; i++) {
-//		printf("%d ", M.rpos[i]);
-//	}
-//}
-//void TSMAdd() {
-//	TSMatrix M, N, Q;//¾Ö²¿±äÁ¿£¬ÓÃÓÚ´æ´¢ÓÃ»§ÊäÈëµÄÈýÔª×éË³Ðò±í,ÔÚCreateº¯ÊýÖÐ³õÊ¼»¯
-//	Create(&M);
-//	Create(&N);
-//	SqListPrint(M);
-//	MatrixPrint(M);
-//	SqListPrint(N);
-//	MatrixPrint(N);
-//
-//	Add(M, N, &Q);
-//	printf("\nM\t+\tN\t=\n");
-//	SqListPrint(Q);
-//	MatrixPrint(Q);
-//}
 
-//void Transpose() {
-//	TSMatrix M, T;//¾Ö²¿±äÁ¿£¬ÓÃÓÚ´æ´¢ÓÃ»§ÊäÈëµÄÈýÔª×éË³Ðò±í,ÔÚCreateº¯ÊýÖÐ³õÊ¼»¯
-//	Create(&M);
-//	printf("\nÔ­Ê¼¾ØÕóË³Ðò±í:\n");
-//	SqListPrint(M);
-//	printf("\nÔ­Ê¼¾ØÕó:\n");
-//	MatrixPrint(M);
-//
-//	FastTranspose(M, &T);
-//	printf("\n×ªÖÃ¾ØÕóË³Ðò±í:\n");
-//	SqListPrint(T);
-//	printf("\n×ªÖÃ¾ØÕó:\n");
-//	MatrixPrint(T);
-//	printf("\n");
-//}
 
-//for (int i = 0; i < M->mu; i++) {//¼ÆÆ±Æ÷×îÖÕÖµ
-//	for (int j = 0; j < M->nu; j++)
-//		printf("%d ", UniquePos[i][j]);
-//	printf("\n");//Ã¿ÐÐ»»Ò»´Î
-//}
 
-//for (int i = 0; i < M->mu; i++) {//¼ÆÆ±Æ÷³õÊ¼Öµ
-//	for (int j = 0; j < M->nu; j++)
-//		printf("%d ", UniquePos[i][j]);
-//	printf("\n");//Ã¿ÐÐ»»Ò»´Î
-//}
 
-///*---´´½¨Ï¡Êè¾ØÕóÈýÔª×éË³Ðò±í2---*/
-//void Create(TSMatrix* M) {
-//	int p;
-//	printf("\nÇëÎÊ¸ÃÏ¡Êè¾ØÕóµÄÐÐÊý¡¢ÁÐÊýÒÔ¼°·Ç0Ôª¸öÊý(²»Í¬Êý×ÖÇëÓÃ¿Õ¸ñ·Ö¸ô):");
-//	scanf("%d %d %d", &M->mu, &M->nu, &M->tu);
-//	printf("\nÇëÒÀ´ÎÊäÈëÕâ%d¸ö·Ç0ÔªËØµÄÐÐÁÐºÅ¼°ÔªËØÖµ:\n", M->tu);
-//	printf("ÐÐºÅ\tÁÐºÅ\tÖµ\n");
-//	for (p = 1; p <= M->tu; p++)
-//		scanf("%d%d%d", &M->data[p].i, &M->data[p].j, &M->data[p].e);
-//	return;
-//}
 
-///*---¿ìËÙ×ªÖÃ2---*/
-//TSMatrix FastTranspose(TSMatrix M) {
-//	TSMatrix T = M;
-//	int p, q;//MºÍTµÄÔªËØ²Ù×÷Ö¸Õë£¬pÖ¸M£¬qÖ¸T
-//	int col;//MµÄÁÐÖ¸Õë£¬colÖ¸ÁÐ
-//	
-//	/*ÖÆ×÷ÁÐÔªËØÐÅÏ¢±í---¡°Î»ÖÃË÷Òý±í£¿¹þÏ£±í£¿¡±*/
-//		//ÉùÃ÷Êý×é
-//	int num[MAXSIZE] = { 0 };//µ±MAXSIZE¹ý´óÊ±£¬º¯ÊýÕ»»áÂú
-//	int cpot[MAXSIZE];
-//		//Í³¼ÆM¾ØÕóÃ¿Ò»ÁÐ£¨j£©µÄ¸öÊý £¬Ã¿ÁÐ³öÏÖ¼ÇÒ»Æ±£¬¡°¼ÆÆ±·¨¡±
-//	for (p = 1; p <= M.tu; ++p)
-//		++num[M.data[p].j];
-//		//¼ÆËãM¾ØÕóÃ¿Ò»ÁÐµÚÒ»¸ö·ÇÁãÔª¡°ÔÚ×ªÖÃºó¡±£¬ÔÚT¡°Ë³Ðò±í¡±ÖÐµÄÎ»ÖÃ;µÝÍÆ·¨;
-//	cpot[1] = 1;
-//	for (col = 2; col <= M.nu; ++col)
-//		cpot[col] = cpot[col - 1] + num[col - 1];
-//
-//	/*ÒÀ´ÎÉ¨ÃèMË³Ðò±íµÄËùÓÐÔªËØ£¬¸ù¾Ýcpot±í½«Æä·ÅÈë¶ÔÓ¦TË³Ðò±íÖÐµÄÎ»ÖÃ£¬¡°ÌøÔ¾Ê½´æ´¢£¡¡±*/
-//	T.mu = M.nu; T.nu = M.mu; T.tu = M.tu;//ÈýÔª×éË³Ðò±íÐÅÏ¢
-//	for (p = 1; p <= M.tu; ++p)
-//	{
-//		col = M.data[p].j;
-//		q = cpot[col];
-//		T.data[q].i = M.data[p].j;//T.data[cpot[M.data[p].j]].i=M.data[p].j;
-//		T.data[q].j = M.data[p].i;
-//		T.data[q].e = M.data[p].e;
-//		++cpot[col];
-//		/*
-//		ÎÒµÄËã·¨Àí½â£º¡°ÌøÔ¾ÐÔµÄ´æ´¢¡±
-//		ÏÈ°ÑMµÄÃ¿ÁÐµÚÒ»¸ö·ÅºÃ£¬¶ÔÓ¦µÄÊÇÔÚTµÄÃ¿ÐÐµÚÒ»¸ö·Ç0Ôª
-//		MµÚÒ»¸öÉ¨ÃèµÄ²»Ò»¶¨ÊÇMµÚÒ»ÁÐµÄ£¬ËùÒÔ¸ÃÔªËØÔÚTË³Ðò±íÖÐ¾Í²»Ò»¶¨ÊÇµÚÒ»¸ö"T.data[1]"£¬¶øÊÇcpot[j]Õâ¸ö¶ÔÓ¦Î»ÖÃ"T.data[cpot[j]]"
-//		ÌåÏÖÔÚTÖÐµÄ´æ´¢ÊÇÒ»ÖÖ¡°ÌøÔ¾ÐÔµÄ´æ´¢¡±£¨Ë÷Òý´æ´¢£¿£©
-//		µ±TÖÐµÄÃ¿ÐÐµÚÒ»¸ö·Ç0Ôª·ÅºÃºó£¬ÔÚMÖÐÔÙ´ÎÉ¨Ãèµ½¸ÃÐÐµÄÔªËØºó£¬½ôËæÆäºó¾ÍºÃ¡¾++cpot[col];¡¿£¬ÒòÎªMµÄÐÐÒ²ÊÇ°´Ë³Ðò´æ´¢µÄ£¬
-//		×ªµ½TÖÐ£¬TÃ¿ÐÐÒ²¾ÍÊÇ¸ÃÓÐµÄÁÐÐò
-//		*/
-//	}
-//	return T;
-//}
 
-//void Create(TSMatrix* M) {
-//	/*ÊäÈë¾ØÕóÐÅÏ¢*/
-//	printHead();
-//	printf("\t\tÇëÒÀ´ÎÊäÈëÏ¡Êè¾ØÕóµÄÐÐ¡¢ÁÐ¡¢·ÇÁãÔªÊý£º");
-//	scanf("%d%d%d", &M->mu, &M->nu, &M->tu);
-//
-//	/*ºÏ·¨ÐÔ¼ì²é*/
-//	for (; M->tu > M->mu * M->nu;) {
-//		if (M->tu > M->mu * M->nu) {
-//			printf("***>·Ç·¨ÊäÈë£¡ÔªËØ¸öÊýÐëÐ¡ÓÚµÈÓÚ¡¾%d*%d=%d¡¿£¡ÇëÖØÐÂÊäÈë¸ÃÔªËØ£º\n", M->mu, M->nu, M->mu * M->nu);
-//			printf("\t\t¾ØÕó·ÇÁãÔªÊý£º");
-//			scanf("%d", &M->tu);
-//		}
-//	}
-//	/*ÊäÈë¾ØÕóÔªËØ*/
-//	if (M->tu == 0) {//Èç¹ûÎªÁã¾ØÕó£¬Ôò²»ÐèÊäÈëÔªËØ
-//		M->data = NULL;//³õÊ¼»¯£¬²¢¸³ÖµÎª¿Õ£¬¿ÉÒÔ´ýÓÃ£¬ÆäÊµÒ²¿ÉÒÔ²»¼ÓÕâ¸öif£¬·ÖÅä¿Õ¼ä»á·ÖÅäÒ»¸öTripleµÄÊ×µØÖ·
-//		printf("\t\t=====>¡°Äú´´½¨ÁËÒ»¸öÁã¾ØÕó¡£¡±\n");
-//		return;//Êä³öºÍ×ªÖÃÖÐ£¬pÒ²ÊÇ´Ó1¿ªÊ¼£¬²»»á·¢ÉúÊý×éÔ½½ç£¬µ«ÊÇ¿ÉÒÔÊ¡ÂÔ¸÷º¯ÊýÄÚÇ°ÃæµÄ×¼±¸¹¤×÷£¬Îª´Ë£¬Ö»ÐèÔÚ¸÷º¯ÊýÖÐ¼Ó¸öÁã¾ØÕóÅÐ¶ÁÖ±½Ó½áÊøµÄif
-//	}
-//	int p;//Ë³Ðò±íµÄÖ¸Õë
-//	M->data = (TSqList)malloc(sizeof(Triple) * (M->tu + 1));//ÏÂ±ê´Ó1¿ªÊ¼£¬0ºÅ´ýÓÃ
-//	if (!M->data) {
-//		printf("***>ÄÚ´æ²»×ã£¬ÉêÇë¿Õ¼äÊ§°Ü£¡\n ");
-//		return;//·µ»ØÖ÷²Ëµ¥
-//	}
-//
-//	print1(M);
-//	printf("\t\t=====>ÐÐºÅ ÁÐºÅ Öµ£º\n");
-//	/*´´½¨¼ÆÆ±Æ÷*/
-//	int** UniquePos;//Î¨Ò»ÐÔ¼ì²é£¬È·±£ÓÃ»§ÊäÈëµÄÎ»ÖÃÐÅÏ¢Î¨Ò»£¬Í¬Ò»¸öÎ»ÖÃÖ»ÄÜÓÐÒ»¸ö£¬Î»ÖÃÏÂ±ê´Ó0¿ªÊ¼£¬²»¶à·ÖÅä¿Õ¼ä
-//	UniquePos = (int**)malloc(sizeof(int*) * M->mu);
-//	if (!UniquePos) {
-//		printf("***>ÄÚ´æ²»×ã£¬ÉêÇë¿Õ¼äÊ§°Ü£¡\n ");
-//		exit(1);//ºóÐø²Ù×÷´ý¶¨
-//		return;//·µ»ØÖ÷²Ëµ¥
-//	}
-//	for (int i = 0; i < M->mu; i++) {
-//		UniquePos[i] = (int*)malloc(sizeof(int) * M->nu);
-//		if (!UniquePos[i]) {
-//			printf("***>ÄÚ´æ²»×ã£¬ÉêÇë¿Õ¼äÊ§°Ü£¡\n ");
-//			exit(1);//ºóÐø²Ù×÷´ý¶¨
-//			return;//·µ»ØÖ÷²Ëµ¥
-//		}
-//	}
-//	/*
-//	¡°Ö¸ÕëÊý×éµÄÊ×µØÖ·¡±³õÊ¼»¯£¬´æ·Å¡°Ã¿Ò»ÐÐ¡±Ê×ÔªËØµÄµØÖ·£¬Êý×éÄÚ¸÷ÔªËØÆ«ÒÆÁ¿Îª¶þÎ¬Êý×éÒ»ÐÐÔªËØµÄµØÖ·²½³¤
-//	Ö¸ÕëÊý×éµÄÊ×µØÖ·£¬ÓÃÐÐÖ¸Õë´æ·Å£¬¾ÍÒ»¸ö£¬¹ÜÀíÃ¿ÐÐÁÐÖ¸Õë£¬·ÖÅä¡°ÐÐÊý*sizeof(int*)¡±µÄÄÚ´æ³¤¶È
-//	¶ÔÃ¿ÐÐµÄÖ¸Õë±äÁ¿·ÖÅäÄÚ´æ£¬ÁÐÖ¸Õë£¬ÐÐÊý¸ö£¬·Ö±ð¹ÜÀíËùÔÚÐÐµÄÃ¿¸öÔªËØ£¬Ã¿¸ö·ÖÅä¡°ÁÐÊý*sizeof(int)¡±µÄÄÚ´æ³¤¶È
-//	¶þ¼¶Ö¸Õë¶¯Ì¬·ÖÅäÊÍ·ÅÄÚ´æ£¡¡¾ÖØµã£º¸ø¶þÎ¬Êý×é¶¯Ì¬·ÖÅäÄÚ´æ£¡Ò»Î¬µÄ¸ß½×ÐÎÊ½£¬²ã´Î»¯¡¿
-//	ÏÈ·ÖÅäÒ»¿é¿Õ¼ä£¬´óÐ¡Îª´ý¹ÜÀíÔªËØ×Ö½ÚÊý*¹ÜÀí¸öÊý£¬ÔÙ°ÑÕâ¿éÄÚ´æµÄÊ×µØÖ·(16½øÖÆÐòÁÐ£©
-//	¸øÒ»¸öÖ¸ÏòÕâÖÖÔªËØµÄÖ¸Õë£¬Õâ¸öÖ¸Õë¡¾Í¨¹ýÊ×µØÖ·ºÍ¹Ì¶¨Æ«ÒÆÁ¿À´¹ÜÀíËùÓÐÔªËØ¡¿
-//	ÄÇÃ´£¬¹ÜÀíÁËÕâ¸öÖ¸Õë£¬¾ÍÏàµ±ÓÚ¹ÜÀíÁËËû¹ÜÀíµÄËùÓÐÔªËØ£¬Õâ¾ÍÊÇ¡¾Êý×é¡¿µÄÔ­Àí
-//	¡¾Àí½â¡¿¼ÆËã»úÄÚ´æÊÇÒ»Î¬µÄ£¬µ«¿ÉÒÔÍ¨¹ýÉèÖÃ¡¾²ã´Î¡¿À´Ê¹ÄÚ´æ¡¾¶àÎ¬»¯¡¿
-//	*/
-//	for (int i = 0; i < M->mu; i++) {//¼ÆÆ±Æ÷³õÊ¼»¯£¬ÏÂ±ê´Ó0¿ªÊ¼
-//		for (int j = 0; j < M->nu; j++)
-//			UniquePos[i][j] = 0;
-//	}
-//	//for (int i = 0; i < M->mu; i++) {//¼ÆÆ±Æ÷³õÊ¼Öµ
-//	//	for (int j = 0; j < M->nu; j++)
-//	//		printf("%d ", UniquePos[i][j]);
-//	//	printf("\n");//Ã¿ÐÐ»»Ò»´Î
-//	//}
-//	/*¿ªÊ¼ÊäÈë*/
-//	//int flag;//·¶Î§¼ì²é¸øÎ¨Ò»ÐÔ¼ì²éµÄÐÅºÅ£¬ÀàËÆº¯ÊýµÄ·µ»ØÖµ¡¾¸÷º¯Êý¼äµÄÐÅºÅ½»Á÷Ã½½é¡¿¡¾µ«½ö¿´Æ±Êý±ã¿ÉÅÐ¶Ï¡¿
-//	bool repeat = false;
-//	for (p = 1; p <= M->tu; p++)
-//	{
-//		if (repeat) {//Èç¹ûÁ½ÖØ¼ì²é²»Í¨¹ý£¬ÐèÒªÖØÊäÉÏÌõÊý¾Ý
-//			for (int i = 1; i < p; i++)//´òÓ¡ÒÑ½ÓÊÜµÄÊý¾Ý
-//			{
-//				printf("\t\t=====>%d %d %d\n", M->data[i].i, M->data[i].j, M->data[i].e);
-//			}
-//			repeat = false;//±êÖ¾Ö´ÐÐÍêÒª¼°Ê±»Ö¸´£¬ÒÔ±ãÏÂ´ÎÅÐ¶¨
-//		}
-//		printf("\t\t=====>");
-//		scanf("%d%d%d", &(M->data[p].i), &(M->data[p].j), &(M->data[p].e));
-//		/*ºÏ·¨ÐÔ¼ì²é£¬Ê¹ÓÃ»§ÕýÈ·ÊäÈë*/
-//		/*1.·¶Î§¼ì²é¡¾½Ó²»½ÓÊÜ¸ÃÊý¾Ý¡¿*/
-//		if (M->data[p].i<1 || M->data[p].i >M->mu || M->data[p].j<1 || M->data[p].j>M->nu)
-//		{//¡¾Î´Í¨¹ý½øÐÐÒÔÏÂ²Ù×÷£º¡¿
-//			printf("***>·Ç·¨ÊäÈë£¡ÔªËØÐÐÁÐºÅÐëÔÚ¡¾1-%d¡¿¡¾1-%d¡¿ÄÚ£¡ÇëÖØÐÂÊäÈë¸ÃÔªËØ£º\n", M->mu, M->nu);
-//			p--;//»ØÍË£¬ÏÂ´ÎÖØÐ´´ËTriple
-//			//flag = 0;//±ê¼ÇÎ´Í¨¹ý£¬¸øÎ¨Ò»ÐÔ¼ì²éµÄÐÅºÅ
-//			repeat = true;//ÐèÒªÖØÊä
-//		}
-//		else
-//		{//¡¾Í¨¹ý½øÐÐÒÔÏÂ²Ù×÷£º¡¿
-//			//flag = 1;//±ê¼ÇÍ¨¹ý£¬¸øÎ¨Ò»ÐÔ¼ì²éµÄÐÅºÅ
-//			++UniquePos[M->data[p].i - 1][M->data[p].j - 1];//¡¾·¶Î§¼ì²éÍ¨¹ý£º¼ÆÆ±¡¿×¢ÒâÕâÀï±ØÐëÍ¨¹ý²ÅÒª¼ÆÆ±£¬·ñÔò³¬³ö·¶Î§µÄÎ»ÖÃ»áµ¼ÖÂ¼ÆÆ±Æ÷Ô½½ç
-//		}
-//
-//		/*2.Î¨Ò»ÐÔ¼ì²é*/
-//		if (p >= 2) {//µÚ¶þ¸öÔªËØÒÔºó²ÅÐèÒªÎ¨Ò»ÐÔ¼ì²é,ÇÒÍ¨¹ýÁËÇ°ÃæµÄ·¶Î§¼ì²é²ÅÐèÒªÎ¨Ò»ÐÔ¼ì²é¡¾½ö¿´Æ±Êý±ã¿ÉÅÐ¶Ï¡¿
-//			if (UniquePos[M->data[p].i - 1][M->data[p].j - 1] >= 2) {//¡¾0£º  ËµÃ÷Î´Í¨¹ý·¶Î§¼ì²é£¬ÎÞÐè½øÐÐÎ¨Ò»ÐÔ¼ì²é£¬Ìø¹ý±¾Óï¾ä¡¿
-//																	 //¡¾1£º  ËµÃ÷Í¨¹ý·¶Î§¼ì²é£¬ÇÒÖ»³öÏÖ1´Î£¬·ûºÏÎ¨Ò»ÐÔ£¬Ìø¹ý±¾Óï¾ä¡¿
-//																	 //¡¾2~n£ºËµÃ÷Í¨¹ý·¶Î§¼ì²é£¬µ«ÊäÈë³¬¹ý1´Î£¬²»·ûºÏÎ¨Ò»ÐÔ£¬Ö´ÐÐÌáÊ¾ºÍ»ØÍËÖØÊä²Ù×÷¡¿
-//				// ËùÒÔ  Æ±Êý >= 2 Ê±£¬¼´¡¾Î´Í¨¹ý£¬½øÐÐÒÔÏÂ²Ù×÷¡¿
-//				//printf("==>¸ÃÎ»ÖÃÒÑ´æÔÚ·ÇÁãÔªËØ£¬ÊÇ·ñ¸üÐÂ¸ÃÎ»ÖÃÔªËØ¡¾y/!y¡¿£º\n");
-//				printf("***>¸ÃÎ»ÖÃÒÑÓÐÔªËØ£»ÇëÊäÈëÔªËØµÄÕýÈ·Î»ÖÃ£º\n");
-//				p--;//»ØÍË£¬ÏÂ´ÎÖØÐ´´ËTriple
-//				repeat = true;//ÐèÒªÖØÊä
-//			}
-//		}
-//	}
-//	/*È·ÈÏÊäÈë*/
-//	//ÍòÒ»ÓÃ»§×îºó·¢ÏÖË³Ðò³ö´íÁËÔõÃ´°ì£¿
-//	// ÊäÈëÊ±¾ÍÓÐ¾À´í»ú»á
-//	// Êäµ½×îºó¾ÍÃ»ÁË£¬ÄÇ¾ÍÖ»ÄÜ³ÌÐòÀ´°ïÓÃ»§ÅÅÐò£¬»òÕßÖ±½ÓÖØÊä
-//	//int select;//´´½¨Ñ¡ÔñÆ÷
-//	//printf("===>ÊÇ·ñÐèÒª¶Ô´ËÈýÔª×éË³Ðò±í½øÐÐ¡°ÐÐÐòÓÅÏÈ¡±µÄÅÅÐò£¿¡¾1£ºÐèÒªÅÅÐò£»2£º²»ÐèÒª£¬ÖØÊä£»3£º²»ÐèÒª£¬È·ÈÏÓÐÐò¡¿\n");
-//	//scanf("%d", &select);
-//	//if (select == 'y' || select == 'Y') {
-//	//	TSMatrixSort(M);//ÈýÔª×é±íµÄ¾ØÕóÅÅÐòËã·¨
-//	//}
-//	//for (int i = 0; i < M->mu; i++) {//¼ÆÆ±Æ÷×îÖÕÖµ
-//	//	for (int j = 0; j < M->nu; j++)
-//	//		printf("%d ", UniquePos[i][j]);
-//	//	printf("\n");//Ã¿ÐÐ»»Ò»´Î
-//	//}
-//	/*Ïú»Ù¼ÆÆ±Æ÷*/
-//	for (int i = 0; i < M->mu; i++)
-//		free(UniquePos[i]);//ÓÐÐÐÊý+1¸öÖ¸ÕëÐèÒªÊÍ·Å£¬ÔõÃ´·ÖÅäµÄ¶Ñ¿Õ¼ä£¬¾ÍÔõÃ´ÊÍ·Å
-//	free(UniquePos);//ÏÈÊÍ·ÅµÍ¼¶Ö¸Õë£¬×îºóÊÍ·Å¸ß¼¶Ö¸Õë
-//
-//	printf("¡°´´½¨³É¹¦£¡¡±\n");
-//	return;
-//}
+
+
